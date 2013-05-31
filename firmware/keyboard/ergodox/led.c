@@ -32,7 +32,7 @@ void kb__led__on(uint8_t led) {
         case 1: (DDRB |=  (1<<5)); break;  // topmost
         case 2: (DDRB |=  (1<<6)); break;  // middle
         case 3: (DDRB |=  (1<<7)); break;  // bottommost
-        case 4:                    break;
+        case 4: (PORTD |= (1<<6)); break;  // teensy
         case 5:                    break;
     };
 }
@@ -40,10 +40,10 @@ void kb__led__on(uint8_t led) {
 void kb__led__off(uint8_t led) {
     switch(led) {
         case 1: (DDRB &= ~(1<<5)); break;  // topmost
-	    case 2: (DDRB &= ~(1<<6)); break;  // middle
-	    case 3: (DDRB &= ~(1<<7)); break;  // bottommost
-        case 4:                    break;
-        case 5:                    break;
+	case 2: (DDRB &= ~(1<<6)); break;  // middle
+	case 3: (DDRB &= ~(1<<7)); break;  // bottommost
+        case 4: (PORTD &= ~(1<<6)); break; // teensy
+        case 5:                     break;
     };
 }
 

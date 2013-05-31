@@ -18,6 +18,7 @@
 #include "../firmware/lib/data-types/list.h"
 #include "./main.h"
 
+
 // ----------------------------------------------------------------------------
 
 #ifndef OPT__DEBOUNCE_TIME
@@ -118,6 +119,8 @@ int main(void) {
             read('S') ? on('S') : off('S');  // scroll lock
             read('O') ? on('O') : off('O');  // compose
             read('K') ? on('K') : off('K');  // kana
+            
+            update_layout_leds();
             #undef read
             #undef on
             #undef off

@@ -223,7 +223,10 @@ KEYS__DEFAULT(    prScr,          KEYBOARD__PrintScreen                );
 KEYS__DEFAULT(    nonUSBkslash,   KEYBOARD__NonUS_Backslash_Pipe       );
 KEYS__DEFAULT(    nonUSPound,     KEYBOARD__NonUS_Pound_Tilde          );
 
-// media keys - vol+/-, mute, media transport???
+// media keys - media transport??? 
+// F13-XX??? might do some maccy functions
+  // F12 = eject (with UK PC keyboard driver!)
+// mute, volumeD, volumeU defined in keyboard/ergodox/layout/common/keys.c.h
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
  * ------------------------------------------------------------------------- */
 
 /**                                                                 description
- * A Colemak layout (modified from the Kinesis layout).
+ * A Colemak and Qwerty layout with Mac and Windows optimisations
  *
  * Implements the "layout" section of '.../firmware/keyboard.h'
  *
@@ -18,6 +18,7 @@
 
 #include "./common/definitions.h"
 
+#include "./common/keys.c.h"
 
 // ----------------------------------------------------------------------------
 // matrix control
@@ -32,9 +33,9 @@
 
 void kb__led__logical_on(char led) {
     switch(led) {
-        case 'N': kb__led__on(1); break;  // numlock
-        case 'C': kb__led__on(2); break;  // capslock
-        case 'S': kb__led__on(3); break;  // scroll lock
+        case 'N':                 break;  // numlock
+        case 'C': kb__led__on(4); break;  // capslock
+        case 'S':                 break;  // scroll lock
         case 'O':                 break;  // compose
         case 'K':                 break;  // kana
     };
@@ -42,26 +43,62 @@ void kb__led__logical_on(char led) {
 
 void kb__led__logical_off(char led) {
     switch(led) {
-        case 'N': kb__led__off(1); break;  // numlock
-        case 'C': kb__led__off(2); break;  // capslock
-        case 'S': kb__led__off(3); break;  // scroll lock
+        case 'N':                  break;  // numlock
+        case 'C': kb__led__off(4); break;  // capslock
+        case 'S':                  break;  // scroll lock
         case 'O':                  break;  // compose
         case 'K':                  break;  // kana
     };
 }
 
+void update_layout_leds(void) {
+  ;
+}
+
+void pop_all(void) {
+  kb__led__on(1);
+  kb__led__off(2);
+  kb__led__off(3);
+  layer_stack__pop_id(1);
+  layer_stack__pop_id(2);
+}
+void keys__press__push_windows(void) {
+  pop_all();
+  kb__led__off(1);
+  layer_stack__push(0, 1, 1); 
+  _flags.tick_keypresses = false;
+  kb__led__on(2);
+}
+void keys__release__push_windows(void) {
+  ;
+}
+void keys__press__push_qwerty(void) {
+  pop_all();
+  kb__led__off(1);
+  layer_stack__push(0, 2, 2); 
+  _flags.tick_keypresses = false;
+  kb__led__on(3);
+}
+void keys__release__push_qwerty(void) {
+  ;
+}
+#define keys__press__popAll pop_all
+#define keys__release__popAll pop_all
+
 // Meaningful function names
-#define LTwin lpu1l1
-#define LTqwe lpu2l2
+#define LBase popAll
+#define LTwin push_windows
+#define LTqwe push_qwerty
 #define LHnum lpupo3l3
 #define LHdev lpupo4l4
+#define LHadm lpupo5l5
+
 
 
 // ----------------------------------------------------------------------------
 // keys
 // ----------------------------------------------------------------------------
 
-#include "./common/keys.c.h"
 
 KEYS__LAYER__NUM_PU_PO(10, 4);
 KEYS__LAYER__NUM_PUSH(10, 4);
@@ -87,8 +124,8 @@ static _layout_t _layout = {
    equal,        1,        2,        3,        4,        5,    home,
      tab,        q,        w,        f,        p,        g,     end,
      esc,        a,        r,        s,        t,        d,
-    home,        z,        x,        c,        v,        b,    ctrlL,
-     btldr /*tmp - ensure i can wipe*/,    grave, nonUSBkslash,   braceL, braceR,
+nonUSBkslash,    z,        x,        c,        v,        b,    ctrlL,
+   grave,      nop,      nop,      nop,      nop,
                                                                  del,     altL,
                                                        nop,      nop,     guiL,
                                                      LHnum,       bs,  shL2kcap,
@@ -158,68 +195,68 @@ ctrlR/**/,	transp,	transp,
 // left hand ...... ......... ......... ......... ......... ......... .........
      nop,       F1,       F2,       F3,       F4,       F5,       F6,
      nop,       F7,       F8,       F9,      F10,      F11,      F12,
-     nop,      nop,      nop/* volume/mute */,      nop,      nop,      nop,
+     nop,      nop,     mute,  volumeD,  volumeU/* ??? */,      nop,
      nop,      nop,      nop/* media transport */,      nop,      nop,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
-                                                                 nop,      nop,
-                                                       nop,      nop,      nop,
-                                                       nop,      nop,      nop,
+                                                                    transp,      transp,
+                                                       transp,      transp,      transp,
+                                                       transp,      transp,      transp,
 // right hand ..... ......... ......... ......... ......... ......... .........
-               nop,      nop,      nop,      nop,      nop,      nop,      nop,
-               nop,      nop,      nop,      nop,      nop,      nop,      nop,
-                         nop,      nop,      nop,      nop,      nop,      nop,
-               nop,      nop,      nop,      nop,      nop,      nop,      nop,
-                                   nop,      nop,      nop,      nop,      nop,
-     nop,      nop,
-     nop,      nop,      nop,
-     nop,      nop,      nop  ),
+               ins,      nop,      nop,    equal,    kpDiv,    kpMul,      nop,
+               num,      nop,      kp7,      kp8,      kp9,    kpSub,      nop,
+                         nop,      kp4,      kp5,      kp6,    kpAdd,      nop,
+               nop,      nop,      kp1,      kp2,      kp3,  kpEnter,      nop,
+                                   nop,      nop,    kpDec,  kpEnter,      nop,
+     transp,      transp,
+     transp,      transp,      transp,
+     transp,      transp,      kp0  ),
 
 
-// layer 4 -- Dev shortcuts
+// layer 4 -- Dev & Vim shortcuts
     MATRIX_LAYER(
 // macro, unused,
        K,    nop,
 // left hand ...... ......... ......... ......... ......... ......... .........
      nop,      nop,      nop,      nop,      nop,      nop,      nop,
-     nop,      nop,      nop,      nop,      nop,      nop,      nop,
-     nop,      nop,      nop,      nop,      nop,      nop,
-     nop,      nop,      nop,      nop,      nop,      nop,      nop,
+     nop,      nop,      nop,   parenL,   parenR,      nop,      nop,
+     nop,    equal,     plus,   braceL,   braceR,   exclam,
+     nop,     dash,  undersc,    brktL,    brktR,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
-                                                                 nop,      nop,
-                                                       nop,      nop,      nop,
-                                                       nop,      nop,      nop,
+                                                                    transp,      transp,
+                                                       transp,      transp,      transp,
+                                                       transp,      transp,      transp,
 // right hand ..... ......... ......... ......... ......... ......... .........
-               nop,      nop,      nop,      nop,      nop,      nop,      nop,
-               nop,      nop,      nop,      nop,      nop,      nop,      nop,
-                         nop,      nop,      nop,      nop,      nop,      nop,
+               nop,      nop,      nop,      nop,      nop,      nop,    LHadm,
+               nop,    caret,      nop,      nop,   dollar,      nop,      nop,
+                           h,        j,        k,        l,      nop,      nop,
                nop,      nop,      nop,      nop,      nop,      nop,      nop,
                                    nop,      nop,      nop,      nop,      nop,
-     nop,      nop,
-     nop,      nop,      nop,
-     nop,      nop,      nop  ),
+     transp,      transp,
+     transp,      transp,      transp,
+     transp,      transp,      transp  ),
 
 // layer 5 -- Admin
     MATRIX_LAYER(
 // macro, unused,
        K,    nop,
 // left hand ...... ......... ......... ......... ......... ......... .........
-     nop,      nop,      nop,      nop,      nop,      nop,      nop,
+   btldr,      nop,      nop,      nop,    LTqwe,    LTwin,    LBase,
      nop,      nop,      nop,      nop,      nop,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
-                                                                 nop,      nop,
-                                                       nop,      nop,      nop,
-                                                       nop,      nop,      nop,
+                                                                    nop,nop,
+                                                       nop,nop,nop,
+                                                       nop,nop,nop,
 // right hand ..... ......... ......... ......... ......... ......... .........
                nop,      nop,      nop,      nop,      nop,      nop,      nop,
                nop,      nop,      nop,      nop,      nop,      nop,      nop,
                          nop,      nop,      nop,      nop,      nop,      nop,
                nop,      nop,      nop,      nop,      nop,      nop,      nop,
                                    nop,      nop,      nop,      nop,      nop,
-     nop,      nop,
-     nop,      nop,      nop,
-     nop,      nop,      nop  ),
+     nop,nop,
+     nop,nop,nop,
+     nop,nop,      transp  ),
 
 
 
