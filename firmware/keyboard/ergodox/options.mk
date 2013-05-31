@@ -21,13 +21,14 @@ F_CPU := 16000000
 # processor speed, in Hz; max value is 16000000 (16MHz); must match
 # initialization in source
 
-KEYBOARD_LAYOUT := qwerty-kinesis-mod
+KEYBOARD_LAYOUT := tobz-custom
 # default layout for this keyboard
 
 KEYBOARD_LAYOUTS := \
 	colemak-symbol-mod \
 	dvorak-kinesis-mod \
-	qwerty-kinesis-mod
+	qwerty-kinesis-mod \
+        tobz-custom
 # a list of all available layouts for this keyboard
 
 # -----------------------------------------------------------------------------
@@ -60,4 +61,5 @@ CFLAGS += -include $(wildcard $(CURDIR)/options.h)
 $(CURDIR)/layout/qwerty-kinesis-mod.o: $(wildcard $(CURDIR)/layout/common/*)
 $(CURDIR)/layout/dvorak-kinesis-mod.o: $(wildcard $(CURDIR)/layout/common/*)
 $(CURDIR)/layout/colemak-symbol-mod.o: $(wildcard $(CURDIR)/layout/common/*)
+$(CURDIR)/layout/tobz-custom.o: $(wildcard $(CURDIR)/layout/common/*)
 

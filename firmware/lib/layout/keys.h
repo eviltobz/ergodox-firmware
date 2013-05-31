@@ -223,6 +223,7 @@ KEYS__DEFAULT(    prScr,          KEYBOARD__PrintScreen                );
 KEYS__DEFAULT(    nonUSBkslash,   KEYBOARD__NonUS_Backslash_Pipe       );
 KEYS__DEFAULT(    nonUSPound,     KEYBOARD__NonUS_Pound_Tilde          );
 
+// media keys - vol+/-, mute, media transport???
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

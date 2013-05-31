@@ -23,7 +23,7 @@
 KEYBOARD_NAME := ergodox
 # the name of the keyboard to build a firmware for
 
-TARGET := firmware
+TARGET := tobz_custom
 # default name for the '.hex', '.eep', and '.map' files we'll be generating
 
 # -----------------------------------------------------------------------------
