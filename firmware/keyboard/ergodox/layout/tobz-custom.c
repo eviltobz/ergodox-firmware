@@ -31,10 +31,17 @@
 // LED control
 // ----------------------------------------------------------------------------
 
+// TODO 
+//
+// have leds do normal keyboard flavour lights when in the admin layer, but layer lights when elsewhere
+// any other statusy things that i can think of to have led indicator states???
+// .....
+// in admin mode, have the button with the led do the function.
+
 void kb__led__logical_on(char led) {
     switch(led) {
         case 'N':                 break;  // numlock
-        case 'C': kb__led__on(4); break;  // capslock
+        case 'C': kb__led__on(3); break;  // capslock
         case 'S':                 break;  // scroll lock
         case 'O':                 break;  // compose
         case 'K':                 break;  // kana
@@ -44,7 +51,7 @@ void kb__led__logical_on(char led) {
 void kb__led__logical_off(char led) {
     switch(led) {
         case 'N':                  break;  // numlock
-        case 'C': kb__led__off(4); break;  // capslock
+        case 'C': kb__led__off(3); break;  // capslock
         case 'S':                  break;  // scroll lock
         case 'O':                  break;  // compose
         case 'K':                  break;  // kana
@@ -56,28 +63,28 @@ void update_layout_leds(void) {
 }
 
 void pop_all(void) {
-  kb__led__on(1);
+  kb__led__off(1);
   kb__led__off(2);
-  kb__led__off(3);
+  //kb__led__off(3);
   layer_stack__pop_id(1);
   layer_stack__pop_id(2);
 }
 void keys__press__push_windows(void) {
   pop_all();
-  kb__led__off(1);
+  //kb__led__off(1);
   layer_stack__push(0, 1, 1); 
   _flags.tick_keypresses = false;
-  kb__led__on(2);
+  kb__led__on(1);
 }
 void keys__release__push_windows(void) {
   ;
 }
 void keys__press__push_qwerty(void) {
   pop_all();
-  kb__led__off(1);
+  //kb__led__off(1);
   layer_stack__push(0, 2, 2); 
   _flags.tick_keypresses = false;
-  kb__led__on(3);
+  kb__led__on(2);
 }
 void keys__release__push_qwerty(void) {
   ;
@@ -93,6 +100,25 @@ void keys__release__push_qwerty(void) {
 #define LHdev lpupo4l4
 #define LHadm lpupo5l5
 
+/*
+void kbfun_mediakey_press_release(void) {
+  uint8_t keycode = kb_layout_get(LAYER, ROW, COL);
+  _kbfun_mediakey_press_release(IS_PRESSED, keycode);
+}
+
+void _kbfun_mediakey_press_release(bool press, uint8_t keycode) {
+  uint16_t mediakey_code = _media_code_lookup_table[keycode];
+  if (press) {
+    consumer_key = mediakey_code;
+  } else {
+    // Only one key can be pressed at a time so only clear the keypress for
+    //  active key (most recently pressed)
+    if (mediakey_code == consumer_key) {
+      consumer_key = 0;
+    }
+  }
+}
+*/
 
 
 // ----------------------------------------------------------------------------
@@ -110,6 +136,7 @@ KEYS__LAYER__NUM_POP(10);
 // ----------------------------------------------------------------------------
 
 #include "./common/matrix.h"
+
 
 
 static _layout_t _layout = {
@@ -134,7 +161,7 @@ nonUSBkslash,    z,        x,        c,        v,        b,    ctrlL,
              pageD,        j,        l,        u,        y,  semicol,  nonUSPound,
                            h,        n,        e,        i,        o,    quote,
              ctrlR,        k,        m,    comma,   period,   arrowU,    slash,
-                                   nop,      nop,   arrowL,   arrowD,   arrowR,
+                                 brktL,    brktR,   arrowL,   arrowD,   arrowR,
     altR,    enter,
     guiR,      nop,      nop,
  shR2kcap,    space,    LHdev  ),
@@ -195,8 +222,8 @@ ctrlR/**/,	transp,	transp,
 // left hand ...... ......... ......... ......... ......... ......... .........
      nop,       F1,       F2,       F3,       F4,       F5,       F6,
      nop,       F7,       F8,       F9,      F10,      F11,      F12,
-     nop,      nop,     mute,  volumeD,  volumeU/* ??? */,      nop,
-     nop,      nop,      nop/* media transport */,      nop,      nop,      nop,      nop,
+     nop,      nop,     mute,  volumeD,  volumeU,      nop,
+     nop,    mstop,    mprev,    mplay,    mnext,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
                                                                     transp,      transp,
                                                        transp,      transp,      transp,

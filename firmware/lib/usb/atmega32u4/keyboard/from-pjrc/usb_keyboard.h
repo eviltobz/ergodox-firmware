@@ -30,6 +30,7 @@ int8_t usb_keyboard_send(void);
 extern uint8_t keyboard_modifier_keys;
 extern uint8_t keyboard_keys[6];
 extern volatile uint8_t keyboard_leds;
+extern uint16_t consumer_key;
 
 // ----------------------------------------------------------------------------
 

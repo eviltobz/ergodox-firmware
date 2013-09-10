@@ -209,6 +209,39 @@ void R(shR2kcap) (void) { KF(2_keys_capslock)(false, KEYBOARD__RightShift); }
 void P(btldr) (void) { KF(jump_to_bootloader)(); }
 void R(btldr) (void) {}
 
+/**
+ * media keys
+ */
+#define AUDIO_MUTE              0x00E2
+#define AUDIO_VOL_UP            0x00E9
+#define AUDIO_VOL_DOWN          0x00EA
+#define TRANSPORT_NEXT_TRACK    0x00B5
+#define TRANSPORT_PREV_TRACK    0x00B6
+#define TRANSPORT_STOP          0x00B7
+#define TRANSPORT_PLAY_PAUSE    0x00CD 
+
+#include "../../../../../firmware/lib/usb/atmega32u4/keyboard/from-pjrc/usb_keyboard.h"
+//uint16_t consumer_key = 0;
+
+void MKF(bool pressed, uint16_t keycode)
+{
+  if(pressed) {
+    consumer_key = keycode;
+  } else {
+    if(consumer_key == keycode) consumer_key = 0;
+  }
+}
+#define  KEYS__MEDIA(name, value)             \
+    void P(name) (void) { MKF(true, value); }   \
+    void R(name) (void) { MKF(false, value); }
+
+KEYS__MEDIA( mmute, AUDIO_MUTE );
+KEYS__MEDIA( mvolu, AUDIO_VOL_UP );
+KEYS__MEDIA( mvold, AUDIO_VOL_DOWN );
+KEYS__MEDIA( mstop, TRANSPORT_STOP );
+KEYS__MEDIA( mplay, TRANSPORT_PLAY_PAUSE );
+KEYS__MEDIA( mprev, TRANSPORT_PREV_TRACK );
+KEYS__MEDIA( mnext, TRANSPORT_NEXT_TRACK );
 
 // ----------------------------------------------------------------------------
 // --- layer ------------------------------------------------------------------
