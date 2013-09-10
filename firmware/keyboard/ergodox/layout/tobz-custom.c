@@ -222,7 +222,7 @@ ctrlR/**/,	transp,	transp,
 // left hand ...... ......... ......... ......... ......... ......... .........
      nop,       F1,       F2,       F3,       F4,       F5,       F6,
      nop,       F7,       F8,       F9,      F10,      F11,      F12,
-     nop,      nop,     mute,  volumeD,  volumeU,      nop,
+     nop,      nop,     mmute,  mvold,  mvolu,      nop,
      nop,    mstop,    mprev,    mplay,    mnext,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
                                                                     transp,      transp,

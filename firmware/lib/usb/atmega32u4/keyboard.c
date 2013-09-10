@@ -111,6 +111,8 @@ bool usb__kb__read_led(char led) {
 }
 
 uint8_t usb__kb__send_report(void) {
-    return usb_keyboard_send();
+    uint8_t send_result = usb_keyboard_send();
+    usb_extra_consumer_send();
+    return send_result;
 }
 
