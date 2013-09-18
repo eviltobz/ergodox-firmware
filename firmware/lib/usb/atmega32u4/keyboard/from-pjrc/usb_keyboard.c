@@ -374,6 +374,7 @@ volatile uint8_t keyboard_leds=0;
 
 // currently pressed consumer key
 uint16_t consumer_key;
+uint16_t last_consumer_key;
 
 /**************************************************************************
  *
@@ -695,6 +696,7 @@ int8_t usb_extra_send(uint8_t report_id, uint16_t data)
   uint8_t intr_state, timeout;
 
   if (!usb_configured()) return -1;
+
   intr_state = SREG;
   cli();
   UENUM = EXTRA_ENDPOINT;
@@ -724,5 +726,8 @@ int8_t usb_extra_send(uint8_t report_id, uint16_t data)
 
 int8_t usb_extra_consumer_send()
 {
+  if (last_consumer_key == consumer_key) return 0;
+  last_consumer_key = consumer_key;
+
   return usb_extra_send(REPORT_ID_CONSUMER, consumer_key);
 }
