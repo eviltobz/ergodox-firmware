@@ -110,20 +110,20 @@
 
 #define KEYBOARD_INTERFACE	0
 //#define KEYBOARD_ENDPOINT	3
-#define KEYBOARD_ENDPOINT	1
+#define KEYBOARD_ENDPOINT	3
 #define KEYBOARD_SIZE		8
 #define KEYBOARD_BUFFER		EP_DOUBLE_BUFFER
 
 #define EXTRA_INTERFACE         1
-#define EXTRA_ENDPOINT          2
+#define EXTRA_ENDPOINT          4
 #define EXTRA_SIZE              8
 #define EXTRA_BUFFER            EP_DOUBLE_BUFFER
 
 static const uint8_t PROGMEM endpoint_config_table[] = {
+        0,
+        0,
 	1, EP_TYPE_INTERRUPT_IN,  EP_SIZE(KEYBOARD_SIZE) | KEYBOARD_BUFFER,
-	1, EP_TYPE_INTERRUPT_IN,  EP_SIZE(EXTRA_SIZE) | EXTRA_BUFFER,
-	0,
-        0
+	1, EP_TYPE_INTERRUPT_IN,  EP_SIZE(EXTRA_SIZE) | EXTRA_BUFFER
 };
 
 
