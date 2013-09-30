@@ -213,13 +213,13 @@ static const uint8_t PROGMEM extra_hid_report_desc[] = {
 };
 
 #define KEYBOARD_HID_DESC_NUM   0
-#define KEYBOARD_HID_DESC_OFFSET  (9+(9+9+7)*KEYBOARD_HID_DESC_NUM+9)
+#define KEYBOARD_HID_DESC_OFFSET 9 + 9 // (9+(9+9+7)*KEYBOARD_HID_DESC_NUM+9)
 
 #define EXTRA_HID_DESC_NUM      (KEYBOARD_HID_DESC_NUM + 1)
-#define EXTRA_HID_DESC_OFFSET     (9+(9+9+7)*EXTRA_HID_DESC_NUM+9)
+#define EXTRA_HID_DESC_OFFSET    9 + (9+9+7) + 9 //  (9+(9+9+7)*EXTRA_HID_DESC_NUM+9)
 
 #define NUM_INTERFACES    (EXTRA_HID_DESC_NUM + 1)
-#define CONFIG1_DESC_SIZE (9+(9+9+7)*NUM_INTERFACES)
+#define CONFIG1_DESC_SIZE (9+((9+9+7)*NUM_INTERFACES))
 
 static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
 	// configuration descriptor, USB spec 9.6.3, page 264-266, Table 9-10
