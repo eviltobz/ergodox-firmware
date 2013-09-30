@@ -122,7 +122,8 @@
 static const uint8_t PROGMEM endpoint_config_table[] = {
 	1, EP_TYPE_INTERRUPT_IN,  EP_SIZE(KEYBOARD_SIZE) | KEYBOARD_BUFFER,
 	1, EP_TYPE_INTERRUPT_IN,  EP_SIZE(EXTRA_SIZE) | EXTRA_BUFFER,
-	0
+	0,
+        0
 };
 
 
