@@ -198,6 +198,19 @@ static const uint8_t PROGMEM keyboard_hid_report_desc[] = {
 // Audio & system controls - consumer key stuff
 // http://www.microsoft.com/whdc/archive/w2kbd.mspx  -- is this windows only? or just happens to be based on microsofty documentation?
 static const uint8_t PROGMEM extra_hid_report_desc[] = {
+    /* system control */
+    0x05, 0x01, // USAGE_PAGE (Generic Desktop)
+    0x09, 0x80, // USAGE (System Control)
+    0xa1, 0x01, // COLLECTION (Application)
+    0x85, REPORT_ID_SYSTEM, // REPORT_ID (2)
+    0x15, 0x01, // LOGICAL_MINIMUM (0x1)
+    0x25, 0xb7, // LOGICAL_MAXIMUM (0xb7)
+    0x19, 0x01, // USAGE_MINIMUM (0x1)
+    0x29, 0xb7, // USAGE_MAXIMUM (0xb7)
+    0x75, 0x10, // REPORT_SIZE (16)
+    0x95, 0x01, // REPORT_COUNT (1)
+    0x81, 0x00, // INPUT (Data,Array,Abs)
+    0xc0, // END_COLLECTION
     /* consumer */
     0x05, 0x0c,                    // USAGE_PAGE (Consumer Devices)
     0x09, 0x01,                    // USAGE (Consumer Control)
@@ -210,7 +223,7 @@ static const uint8_t PROGMEM extra_hid_report_desc[] = {
     0x75, 0x10,                    //   REPORT_SIZE (16)
     0x95, 0x01,                    //   REPORT_COUNT (1)
     0x81, 0x00,                    //   INPUT (Data,Array,Abs)
-    0xc0,                          // END_COLLECTION
+    0xc0                          // END_COLLECTION
 };
 
 #define KEYBOARD_HID_DESC_NUM   0
@@ -219,7 +232,7 @@ static const uint8_t PROGMEM extra_hid_report_desc[] = {
 #define EXTRA_HID_DESC_NUM      (KEYBOARD_HID_DESC_NUM + 1)
 #define EXTRA_HID_DESC_OFFSET    9 + (9+9+7) + 9 //  (9+(9+9+7)*EXTRA_HID_DESC_NUM+9)
 
-#define NUM_INTERFACES    (EXTRA_HID_DESC_NUM + 1)
+#define NUM_INTERFACES    2 //(EXTRA_HID_DESC_NUM + 1)
 #define CONFIG1_DESC_SIZE (9+((9+9+7)*NUM_INTERFACES))
 
 static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
@@ -262,6 +275,7 @@ static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
         KEYBOARD_SIZE, 0,        // wMaxPacketSize
         10,          // bInterval
 
+        // Consumer keys bit
         // interface descriptor, USB spec 9.6.5, page 267-269, Table 9-12
         9,          // bLength
         4,          // bDescriptorType
@@ -289,6 +303,7 @@ static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
 	0x03,					// bmAttributes (0x03=intr)
 	EXTRA_SIZE, 0,			// wMaxPacketSize
 	10					// bInterval
+
 };
 
 // If you're desperate for a little extra code memory, these strings
@@ -331,6 +346,8 @@ static const struct descriptor_list_struct {
 	{0x2200, KEYBOARD_INTERFACE, keyboard_hid_report_desc, sizeof(keyboard_hid_report_desc)},
 	{0x2100, KEYBOARD_INTERFACE, config1_descriptor+KEYBOARD_HID_DESC_OFFSET, 9},
         // Extra HID descriptor
+	//{0x2200, KEYBOARD_INTERFACE, keyboard_hid_report_desc, sizeof(keyboard_hid_report_desc)},
+	//{0x2100, KEYBOARD_INTERFACE, config1_descriptor+KEYBOARD_HID_DESC_OFFSET, 9},
 	{0x2200, EXTRA_INTERFACE, extra_hid_report_desc, sizeof(extra_hid_report_desc)},
 	{0x2100, EXTRA_INTERFACE, config1_descriptor+EXTRA_HID_DESC_OFFSET, 9},
         // String descriptors

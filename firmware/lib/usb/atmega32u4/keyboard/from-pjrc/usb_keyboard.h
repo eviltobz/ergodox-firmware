@@ -32,7 +32,7 @@ extern uint8_t keyboard_keys[6];
 extern volatile uint8_t keyboard_leds;
 extern uint16_t consumer_key;
 
-int8_t usb_extra_consumer_send();
+int8_t usb_extra_consumer_send(void);
 
 // ----------------------------------------------------------------------------
 
