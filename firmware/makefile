@@ -158,12 +158,12 @@ clean:
 
 $(TARGET).elf: $(OBJ)
 	@echo
-	@echo '--- making $@ ---'
+	@echo '--- linking $@ ---'
 	$(CC) $(strip $(CFLAGS)) $(strip $(LDFLAGS)) $^ --output $@
 
 %.o: %.c
 	@echo
-	@echo '--- making $@ ---'
+	@echo '--- compiling $@ ---'
 	$(CC) -c $(strip $(CFLAGS)) $(strip $(GENDEPFLAGS)) $< -o $@
 
 # -----------------------------------------------------------------------------
