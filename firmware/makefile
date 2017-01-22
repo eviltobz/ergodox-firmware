@@ -113,16 +113,14 @@ OBJ := $(SRC:%.c=%.o)
 
 .PHONY: all clean
 
-all: $(TARGET).hex $(TARGET).eep
+all: $(TARGET).hex 
 	@echo
 	@echo '---------------------------------------------------------------'
 	@echo '------- done --------------------------------------------------'
 	@echo
 	$(SIZE) --target=$(BINARY_FORMAT) $(TARGET).hex
 	@echo
-	$(SIZE) --target=$(BINARY_FORMAT) $(TARGET).eep
-	@echo
-	@echo 'you can load "$(TARGET).hex" and "$(TARGET).eep" onto the'
+	@echo 'you can load "$(TARGET).hex" onto the'
 	@echo 'Teensy using the Teensy loader'
 	@echo
 	@echo '---------------------------------------------------------------'
@@ -144,17 +142,6 @@ clean:
 	$(OBJCOPY) -O $(BINARY_FORMAT) \
 		-R .eeprom -R .fuse -R .lock -R .signature \
 		$< $@
-
-%.eep: %.elf
-	@echo
-	@echo '--- making $@ ---'
-	# from the WinAVR makefile template (modified)
-	-$(OBJCOPY) -O $(BINARY_FORMAT) \
-		-j .eeprom \
-		--set-section-flags=.eeprom="alloc,load" \
-		--change-section-lma .eeprom=0 \
-		--no-change-warnings \
-		$< $@ || exit 0
 
 $(TARGET).elf: $(OBJ)
 	@echo
