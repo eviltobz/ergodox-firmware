@@ -142,7 +142,10 @@ KEYS__LAYER__NUM_POP(10);
 static _layout_t _layout = {
 
 // ............................................................................
+  
 
+/*   OLD COLEMAK VERSION
+ *
 // layer 0 -- Mac Layer
     MATRIX_LAYER(
 // macro, unused,
@@ -161,6 +164,33 @@ nonUSBkslash,    z,        x,        c,        v,        b,    ctrlL,
              pageD,        j,        l,        u,        y,  semicol,  nonUSPound,
                            h,        n,        e,        i,        o,    quote,
              ctrlR,        k,        m,    comma,   period,   arrowU,    slash,
+                                 brktL,    brktR,   arrowL,   arrowD,   arrowR,
+    altR,    enter,
+    guiR,      nop,      nop,
+ shR2kcap,    space,    LHdev  ),
+*/
+
+
+// BACK TO STUPID MODE :( - NOTE: dev layer can be tweaked now though if hjkl default to their qwerty locations
+//
+// layer 0 -- Mac Layer
+    MATRIX_LAYER(
+// macro, unused,
+       K,    nop,
+// left hand ...... ......... ......... ......... ......... ......... .........
+   equal,        1,        2,        3,        4,        5,    home,
+     tab,        q,        w,        e,        r,        t,     end,
+     esc,        a,        s,        d,        f,        g,
+nonUSBkslash,    z,        x,        c,        v,        b,    ctrlL,
+   grave,      nop,      nop,    brktL,    brktR,
+                                                                 del,     altL,
+                                                       nop,      nop,     guiL,
+                                                     LHnum,       bs,  shL2kcap,
+// right hand ..... ......... ......... ......... ......... ......... .........
+             pageU,        6,        7,        8,        9,        0,     dash,
+             pageD,        y,        u,        i,        o,        p,  nonUSPound,
+                           h,        j,        k,        l,  semicol,    quote,
+             ctrlR,        n,        m,    comma,   period,   arrowU,    slash,
                                  brktL,    brktR,   arrowL,   arrowD,   arrowR,
     altR,    enter,
     guiR,      nop,      nop,
@@ -222,7 +252,7 @@ ctrlR/**/,	transp,	transp,
 // left hand ...... ......... ......... ......... ......... ......... .........
      nop,       F1,       F2,       F3,       F4,       F5,       F6,
      nop,       F7,       F8,       F9,      F10,      F11,      F12,
-     nop,      nop,     mmute,  mvold,  mvolu,      nop,
+     nop,      nop,    mmute,    mvold,    mvolu,      nop,
      nop,    mstop,    mprev,    mplay,    mnext,      nop,      nop,
      nop,      nop,      nop,      nop,      nop,
                                                                     transp,      transp,
